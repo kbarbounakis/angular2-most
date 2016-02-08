@@ -60,7 +60,7 @@ export class ClientDataService implements ClientDataServiceBase {
         return this;
     }
 
-    execute(options:DataServiceExecuteOptions):Observable {
+    execute(options:DataServiceExecuteOptions):Observable<any> {
         var self = this;
         //options defaults
         options.method = options.method || "GET";
@@ -627,15 +627,15 @@ export class ClientDataModel {
         return this.asQueryable().where(attr);
     }
 
-    save(obj:any):Observable {
+    save(obj:any):Observable<any> {
         return this.getService().execute({ method:"POST", url:TextUtils.format("/%s/index.json", this.getName()),data:obj, headers:[] });
     }
 
-    schema(obj:any):Observable {
+    schema(obj:any):Observable<any> {
         return this.getService().execute({ method:"GET", url:TextUtils.format("/%s/schema.json", this.getName()),data:null, headers:[] });
     }
 
-    remove(obj:any):Observable {
+    remove(obj:any):Observable<any> {
         return this.getService().execute({ method:"DELETE", url:TextUtils.format("/%s/index.json", this.getName()),data:obj, headers:[] });
     }
 
@@ -691,7 +691,7 @@ export class ClientDataContext implements ClientDataContextBase {
      * @param {string} password
      * @returns {Observable}
      */
-    authenticate(username:string, password:string):Observable {
+    authenticate(username:string, password:string):Observable<any> {
         return this.getService().execute({
             method:"GET",
             url:"/User/index.json",

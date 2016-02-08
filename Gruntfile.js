@@ -2,26 +2,20 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        typescript: {
-            base: {
-                src: ['*.ts'],
-                dest: 'angular2-most.js',
+        ts: {
+            default: {
+                src: ["**/*.ts", "!node_modules/**/*.ts"],
+                outDir: "dist",
                 options: {
-                    module: 'amd',
-                    target: 'es5',
-                    noImplicitAny:false,
-                    noResolve:false,
-                    sourceMap: true,
-                    declaration:true,
                     experimentalDecorators:true,
-                    references: [
-                        "angular2/core"
-                    ]
+                    module: "amd",
+                    moduleResolution: "node",
+                    declaration:true
                 }
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-typescript');
+    grunt.loadNpmTasks('grunt-ts');
 
 };
