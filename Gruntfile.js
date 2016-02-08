@@ -8,7 +8,7 @@ module.exports = function(grunt) {
                 outDir: "dist",
                 options: {
                     experimentalDecorators:true,
-                    module: "amd",
+                    module: "system",
                     moduleResolution: "node",
                     declaration:true
                 }

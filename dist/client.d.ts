@@ -89,6 +89,9 @@ export declare class ClientDataModel {
     getName(): string;
     asQueryable(): ClientDataQueryable;
     where(attr: string): ClientDataQueryable;
+    select(...attr: string[]): ClientDataQueryable;
+    skip(num: number): ClientDataQueryable;
+    take(num: number): ClientDataQueryable;
     save(obj: any): Observable<any>;
     schema(obj: any): Observable<any>;
     remove(obj: any): Observable<any>;

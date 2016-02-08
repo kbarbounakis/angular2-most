@@ -627,6 +627,19 @@ export class ClientDataModel {
         return this.asQueryable().where(attr);
     }
 
+    select(...attr:string[]):ClientDataQueryable {
+        var q = this.asQueryable();
+        return q.select.apply(q,attr);
+    }
+
+    skip(num:number):ClientDataQueryable {
+        return this.asQueryable().skip(num);
+    }
+
+    take(num:number):ClientDataQueryable {
+        return this.asQueryable().take(num);
+    }
+
     save(obj:any):Observable<any> {
         return this.getService().execute({ method:"POST", url:TextUtils.format("/%s/index.json", this.getName()),data:obj, headers:[] });
     }
