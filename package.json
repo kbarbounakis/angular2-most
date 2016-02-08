@@ -1,0 +1,26 @@
+{
+  "name": "angular2-most",
+  "version": "2.0.0",
+  "description": "MOST Web Framework Client Library for Angular 2",
+  "scripts": { },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kbarbounakis/angular2-most.git"
+  },
+  "keywords": [
+    "most",
+    "most-web",
+    "angular",
+    "angular2",
+    "client"
+  ],
+  "author": "Kyriakos Barbounakis",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/kbarbounakis/angular2-most/issues"
+  },
+  "homepage": "https://github.com/kbarbounakis/angular2-most",
+  "peerDependencies": {
+    "angular2": "^2.0.0-beta.3"
+  }
+}
