@@ -2,7 +2,7 @@
   "name": "angular2-most",
   "version": "2.0.0",
   "description": "MOST Web Framework Client Library for Angular 2",
-  "scripts": { },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/kbarbounakis/angular2-most.git"
@@ -22,5 +22,9 @@
   "homepage": "https://github.com/kbarbounakis/angular2-most",
   "peerDependencies": {
     "angular2": "^2.0.0-beta.3"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-typescript": "^0.8.0"
   }
 }

@@ -492,7 +492,7 @@ export class ClientDataQueryable {
         Args.check(attr.length==0,"Attributes may not be empty");
         var arr = [];
         for (var i = 0; i < attr.length; i++) {
-            Args.check(attr[i] instanceof String, "Invalid attribute. Expected string.");
+            Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
             arr.push(attr[i]);
         }
         this.params_.$select = arr.join(",");
@@ -504,7 +504,7 @@ export class ClientDataQueryable {
         Args.check(attr.length==0,"Attributes may not be empty");
         var arr = [];
         for (var i = 0; i < attr.length; i++) {
-            Args.check(attr[i] instanceof String, "Invalid attribute. Expected string.");
+            Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
             arr.push(attr[i]);
         }
         this.params_.$groupby = arr.join(",");
@@ -516,7 +516,7 @@ export class ClientDataQueryable {
         Args.check(attr.length==0,"Attributes may not be empty");
         var arr = [];
         for (var i = 0; i < attr.length; i++) {
-            Args.check(attr[i] instanceof String, "Invalid attribute. Expected string.");
+            Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
             arr.push(attr[i]);
         }
         this.params_.$groupby = arr.join(",");
