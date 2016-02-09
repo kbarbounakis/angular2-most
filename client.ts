@@ -4,11 +4,7 @@
 
 
 import {ClientDataServiceBase} from "./core";
-import {Args} from "./core";
-import {TextUtils} from "./core";
-import {DataServiceQueryParams} from "./core";
-import {DataServiceExecuteOptions} from "./core";
-import {ClientDataContextBase} from "./core";
+import {Args,TextUtils,DataServiceQueryParams,DataServiceExecuteOptions,ClientDataContextBase} from "./core";
 
 /**
  * Angular 2 imports

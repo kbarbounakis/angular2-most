@@ -1,4 +1,4 @@
-System.register([], function(exports_1) {
+System.register("angular2-most/core",[], function(exports_1) {
     var __extends = (this && this.__extends) || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
         function __() { this.constructor = d; }
@@ -157,10 +157,20 @@ System.register([], function(exports_1) {
                     }
                     return stack.join('&');
                 };
+                /**
+                 * Encodes the given string to Base-64 format
+                 * @param {string} s - A string to encode
+                 * @returns {string}
+                 */
                 TextUtils.toBase64 = function (s) {
                     var cv = new Base64();
                     return cv.encode(s);
                 };
+                /**
+                 * Decodes the given string from Base-64 format
+                 * @param {string} s - A base-64 encoded string
+                 * @returns {string}
+                 */
                 TextUtils.fromBase64 = function (s) {
                     var cv = new Base64();
                     return cv.decode(s);

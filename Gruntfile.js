@@ -5,17 +5,43 @@ module.exports = function(grunt) {
         ts: {
             default: {
                 src: ["**/*.ts", "!node_modules/**/*.ts"],
-                outDir: "dist",
+                outDir:"dist",
                 options: {
-                    experimentalDecorators:true,
-                    module: "system",
-                    moduleResolution: "node",
-                    declaration:true
+                    "emitDecoratorMetadata": true,
+                    "experimentalDecorators": true,
+                    "declaration": true,
+                    "module": "system",
+                     "moduleResolution": "node",
+                    "sourceMap": true,
+                    "target": "ES5",
+                    "removeComments": false
                 }
+            }
+        },
+        concat: {
+            js: {
+                src: [
+                    'dist/core.js',
+                    'dist/client.js'
+                ],
+                dest: 'dist/angular2-most.js'
+            }
+        },
+        uglify: {
+            options: {
+                compress: true,
+                mangle: false,
+                sourceMap: true
+            },
+            applib: {
+                src: 'dist/angular2-most.js',
+                dest: 'dist/angular2-most.min.js'
             }
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-ts');
 
 };

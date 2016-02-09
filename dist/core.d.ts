@@ -15,7 +15,17 @@ export declare class TextUtils {
     static isDate(s: string): boolean;
     static parseDate(s: string): Date;
     static toSearch(object: any): string;
+    /**
+     * Encodes the given string to Base-64 format
+     * @param {string} s - A string to encode
+     * @returns {string}
+     */
     static toBase64(s: string): string;
+    /**
+     * Decodes the given string from Base-64 format
+     * @param {string} s - A base-64 encoded string
+     * @returns {string}
+     */
     static fromBase64(s: string): string;
     static format(s: string, ...p: any[]): string;
 }
@@ -36,13 +46,37 @@ export interface DataServiceExecuteOptions {
     headers: any;
 }
 export interface ClientDataServiceBase {
+    /**
+     * Gets a string which represents the base URL of the MOST Web application server
+     */
     getBase(): string;
+    /**
+     * Get a string which represents the HTTP cookie header that is going to used for authenticating requests.
+     */
     getCookie(): string;
+    /**
+     * Sets a string which represents the HTTP cookie header that is going to used for authenticating requests.
+     * @param {string} value
+     */
     setCookie(value: string): any;
+    /**
+     * Executes an HTTP request against the defined MOST Web application server
+     * @param {DataServiceExecuteOptions} options
+     */
     execute(options: DataServiceExecuteOptions): any;
 }
 export interface ClientDataContextBase {
+    /**
+     * Gets a string which represents the base URL of the MOST Web application server
+     */
     getBase(): string;
+    /**
+     * Sets a string which represents the base URL of the MOST Web application server
+     * @param {string} value - The base URL
+     */
     setBase(value: string): any;
+    /**
+     * Gets the instance of ClientDataServiceBase class which is associated with this data context
+     */
     getService(): ClientDataServiceBase;
 }

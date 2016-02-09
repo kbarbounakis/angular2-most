@@ -1,13 +1,12 @@
-
 export class CodedError extends Error {
-    constructor(message: string, public code: string) {
+    constructor(message:string, public code:string) {
         super(message);
     }
 }
 
 export class Args {
 
-    static check(expr:boolean,message:string,code?:string):void {
+    static check(expr:boolean, message:string, code?:string):void {
         if (!expr) {
             throw new CodedError(message, code || "EARG");
         }
@@ -18,7 +17,7 @@ export class Args {
     }
 
     static notEmpty(obj:string, name):void {
-        Args.check((obj != null) && (obj !== undefined) && (obj.length>0), name + " may not be empty", "ENULL");
+        Args.check((obj != null) && (obj !== undefined) && (obj.length > 0), name + " may not be empty", "ENULL");
     }
 
 
@@ -113,11 +112,11 @@ class Base64 {
 export class TextUtils {
 
     static isNotEmptyString(s:string):boolean {
-        return (s!=null) && (s!=undefined) && (s.length>0);
+        return (s != null) && (s != undefined) && (s.length > 0);
     }
 
     static isNullOrUndefined(s:string):boolean {
-        return (s!=null) && (s!=undefined);
+        return (s != null) && (s != undefined);
     }
 
     static zeroPad(num:number, length:number):string {
@@ -150,15 +149,15 @@ export class TextUtils {
         var value;
         var key;
         if (Array.isArray(object)) {
-            if (object.length==0)
-                return  encodeURIComponent(key) + '=';
+            if (object.length == 0)
+                return encodeURIComponent(key) + '=';
         }
         for (key in object) {
             if (object.hasOwnProperty(key)) {
-                value = object[ key ];
-                if (typeof value==='undefined' || value == null) {
+                value = object[key];
+                if (typeof value === 'undefined' || value == null) {
                     value = encodeURIComponent(key) + '=';
-                }  else if (typeof( value ) !== 'object') {
+                } else if (typeof( value ) !== 'object') {
                     value = encodeURIComponent(key) + '=' + encodeURIComponent(value);
                 } else {
                     value = TextUtils.toSearch(value);
@@ -178,6 +177,7 @@ export class TextUtils {
         var cv = new Base64();
         return cv.encode(s);
     }
+
     /**
      * Decodes the given string from Base-64 format
      * @param {string} s - A base-64 encoded string
@@ -188,13 +188,15 @@ export class TextUtils {
         return cv.decode(s);
     }
 
-    static format(s:string,...p:any[]):string {
+    static format(s:string, ...p:any[]):string {
         var i = 0;
         return s.replace(/%[sdfj%]/g, function (x) {
             if (x === "%%") return "%";
             if (i >= p.length) return x;
             var p1 = p[i++];
-            if (((p1==null) && (p1==undefined))) { return ""; }
+            if (((p1 == null) && (p1 == undefined))) {
+                return "";
+            }
             switch (x) {
                 case "%s":
                     return p1.toString();
@@ -212,21 +214,21 @@ export class TextUtils {
 }
 
 export interface DataServiceQueryParams {
-     $filter:string;
-     $groupby:string;
-     $select:string;
-     $orderby:string;
-     $inlinecount:boolean;
-     $top:number;
-     $skip:number;
-     $first:boolean;
+    $filter:string;
+    $groupby:string;
+    $select:string;
+    $orderby:string;
+    $inlinecount:boolean;
+    $top:number;
+    $skip:number;
+    $first:boolean;
 }
 
 export interface DataServiceExecuteOptions {
-     method:string;
-     url:string;
-     data:any;
-     headers:any;
+    method:string;
+    url:string;
+    data:any;
+    headers:any;
 }
 
 export interface ClientDataServiceBase {
@@ -265,3 +267,4 @@ export interface ClientDataContextBase {
      */
     getService():ClientDataServiceBase
 }
+
