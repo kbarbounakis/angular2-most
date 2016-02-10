@@ -16,6 +16,20 @@ module.exports = function(grunt) {
                     "target": "ES5",
                     "removeComments": false
                 }
+            },
+            umd: {
+                src: ["**/*.ts", "!node_modules/**/*.ts"],
+                outDir:"dist/umd",
+                options: {
+                    "emitDecoratorMetadata": true,
+                    "experimentalDecorators": true,
+                    "declaration": false,
+                    "module": "umd",
+                    "moduleResolution": "node",
+                    "sourceMap": true,
+                    "target": "ES5",
+                    "removeComments": false
+                }
             }
         },
         concat: {
@@ -25,6 +39,13 @@ module.exports = function(grunt) {
                     'dist/client.js'
                 ],
                 dest: 'dist/angular2-most.js'
+            },
+            umd: {
+                src: [
+                    'dist/umd/core.js',
+                    'dist/umd/client.js'
+                ],
+                dest: 'dist/umd/angular2-most.js'
             }
         },
         uglify: {
