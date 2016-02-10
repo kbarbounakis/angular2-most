@@ -485,7 +485,7 @@ export class ClientDataQueryable {
 
     select(...attr:string[]):ClientDataQueryable {
         Args.notNull(attr, "Attributes");
-        Args.check(attr.length==0,"Attributes may not be empty");
+        Args.check(attr.length>0,"Attributes may not be empty");
         var arr = [];
         for (var i = 0; i < attr.length; i++) {
             Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
@@ -497,7 +497,7 @@ export class ClientDataQueryable {
 
     groupBy(...attr:string[]):ClientDataQueryable {
         Args.notNull(attr, "Attributes");
-        Args.check(attr.length==0,"Attributes may not be empty");
+        Args.check(attr.length>0,"Attributes may not be empty");
         var arr = [];
         for (var i = 0; i < attr.length; i++) {
             Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
@@ -509,13 +509,13 @@ export class ClientDataQueryable {
 
     expand(...attr:string[]):ClientDataQueryable {
         Args.notNull(attr, "Attributes");
-        Args.check(attr.length==0,"Attributes may not be empty");
+        Args.check(attr.length>0,"Attributes may not be empty");
         var arr = [];
         for (var i = 0; i < attr.length; i++) {
             Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
             arr.push(attr[i]);
         }
-        this.params_.$groupby = arr.join(",");
+        this.params_.$expand = arr.join(",");
         return this;
     }
 
