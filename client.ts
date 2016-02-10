@@ -591,6 +591,13 @@ export class ClientDataQueryable {
             headers:[]
         });
     }
+
+    filter(s:string):ClientDataQueryable {
+        Args.notEmpty("s","Filter expression");
+            this.params_.$filter = s;
+        return this;
+    }
+
 }
 
 
