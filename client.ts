@@ -165,6 +165,19 @@ export class ClientDataQueryable {
     }
 
     /**
+     * @returns {ClientDataQueryable}
+     */
+    setParam(name:string, value:any): ClientDataQueryable {
+        if (/^\$/.test(name)) {
+            this.params_[name] = value;
+        }
+        else {
+            this.params_["$" + name] = value;
+        }
+        return this;
+    }
+
+    /**
      * Gets a string which represents the name of the data model associated with this object.
      * @returns {string}
      */
