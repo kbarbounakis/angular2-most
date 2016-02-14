@@ -1,16 +1,61 @@
+/**
+ * MOST Web Framework
+ * A JavaScript Web Framework
+ * http://themost.io
+ * Created by Kyriakos Barbounakis<k.barbounakis@gmail.com> on 2016-01-29.
+ *
+ * Copyright (c) 2014, Kyriakos Barbounakis k.barbounakis@gmail.com
+ Anthi Oikonomou anthioikonomou@gmail.com
+ All rights reserved.
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice,
+ this list of conditions and the following disclaimer in the documentation
+ and/or other materials provided with the distribution.
+ * Neither the name of MOST Web Framework nor the names of its
+ contributors may be used to endorse or promote products derived from
+ this software without specific prior written permission.
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 (function (factory) {
     if (typeof module === 'object' && typeof module.exports === 'object') {
         var v = factory(require, exports); if (v !== undefined) module.exports = v;
     }
     else if (typeof define === 'function' && define.amd) {
-        define(["require", "exports"], factory);
+        define(["require", "exports", 'angular2/core', 'angular2/http', 'rxjs/add/operator/map'], factory);
     }
 })(function (require, exports) {
+    /**
+     * Angular 2 imports
+     */
+    var core_1 = require('angular2/core');
+    var http_1 = require('angular2/http');
+    require('rxjs/add/operator/map');
     var CodedError = (function (_super) {
         __extends(CodedError, _super);
         function CodedError(message, code) {
@@ -211,35 +256,6 @@ var __extends = (this && this.__extends) || function (d, b) {
         return TextUtils;
     })();
     exports.TextUtils = TextUtils;
-});
-//# sourceMappingURL=core.js.map
-/**
- * Created by kbarbounakis on 2/6/16.
- */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-(function (factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        var v = factory(require, exports); if (v !== undefined) module.exports = v;
-    }
-    else if (typeof define === 'function' && define.amd) {
-        define(["require", "exports", "./core", 'angular2/core', 'angular2/http', 'rxjs/add/operator/map'], factory);
-    }
-})(function (require, exports) {
-    var core_1 = require("./core");
-    /**
-     * Angular 2 imports
-     */
-    var core_2 = require('angular2/core');
-    var http_1 = require('angular2/http');
-    require('rxjs/add/operator/map');
     var ClientDataService = (function () {
         /**
          * Initializes a new instance of ClientDataService class
@@ -284,11 +300,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
                 options.headers["Cookie"] = this.getCookie();
             }
             //validate options URL
-            core_1.Args.notNull(options.url, "Request URL");
+            Args.notNull(options.url, "Request URL");
             //validate URL format
-            core_1.Args.check(!/^https?:\/\//i.test(options.url), "Request URL may not be an absolute URI");
+            Args.check(!/^https?:\/\//i.test(options.url), "Request URL may not be an absolute URI");
             //validate request method
-            core_1.Args.check(/^GET|POST|PUT|DELETE$/i.test(options.method), "Invalid request method. Expected GET, POST, PUT or DELETE.");
+            Args.check(/^GET|POST|PUT|DELETE$/i.test(options.method), "Invalid request method. Expected GET, POST, PUT or DELETE.");
             //set URL parameter
             var url_ = self.getBase() + options.url.replace(/^\//i, "");
             var requestOptions = {
@@ -300,7 +316,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             //if request is a GET HTTP Request
             if (/^GET$/i.test(requestOptions.method)) {
                 //set data as query params
-                requestOptions.search = core_1.TextUtils.toSearch(options.data);
+                requestOptions.search = TextUtils.toSearch(options.data);
             }
             else {
                 //otherwise set HTTP Request body
@@ -327,7 +343,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
                 }
                 else {
                     return JSON.parse(res.text(), function (key, value) {
-                        if (core_1.TextUtils.isDate(value)) {
+                        if (TextUtils.isDate(value)) {
                             return new Date(value);
                         }
                         return value;
@@ -345,11 +361,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     })();
     var ClientDataQueryable = (function () {
         function ClientDataQueryable(model, service) {
-            core_1.Args.notEmpty(model, "Model");
+            Args.notEmpty(model, "Model");
             this.model_ = model;
-            core_1.Args.notNull(service, "Data Service");
+            Args.notNull(service, "Data Service");
             this.service_ = service;
-            this.url_ = core_1.TextUtils.format("/%s/index.json", this.model_);
+            this.url_ = TextUtils.format("/%s/index.json", this.model_);
             //init params
             this.params_ = {};
             //init privates
@@ -366,6 +382,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
          */
         ClientDataQueryable.prototype.getParams = function () {
             return this.params_;
+        };
+        /**
+         * @returns {ClientDataQueryable}
+         */
+        ClientDataQueryable.prototype.setParam = function (name, value) {
+            if (/^\$/.test(name)) {
+                this.params_[name] = value;
+            }
+            else {
+                this.params_["$" + name] = value;
+            }
+            return this;
         };
         /**
          * Gets a string which represents the name of the data model associated with this object.
@@ -386,20 +414,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
          * @param value - A string which represents a relative URI.
          */
         ClientDataQueryable.prototype.setUrl = function (value) {
-            core_1.Args.notEmpty(value, "URL");
-            core_1.Args.check(/^\//.test(value), "URL must be a relative URI");
+            Args.notEmpty(value, "URL");
+            Args.check(/^\//.test(value), "URL must be a relative URI");
             this.url_ = value;
         };
         ClientDataQueryable.create = function (model, service) {
             return new ClientDataQueryable(model, service);
         };
         ClientDataQueryable.prototype.append_ = function () {
-            core_1.Args.notNull(this.privates_.left, "Left operand");
-            core_1.Args.notNull(this.privates_.op, "Comparison operator");
+            Args.notNull(this.privates_.left, "Left operand");
+            Args.notNull(this.privates_.op, "Comparison operator");
             var expr;
             if (Array.isArray(this.privates_.right)) {
-                core_1.Args.check((this.privates_.op === "eq") || (this.privates_.op === "ne"), "Wrong operator. Expected equal or not equal");
-                core_1.Args.check(this.privates_.right.length > 0, "Array may not be empty");
+                Args.check((this.privates_.op === "eq") || (this.privates_.op === "ne"), "Wrong operator. Expected equal or not equal");
+                Args.check(this.privates_.right.length > 0, "Array may not be empty");
                 var arr = this.privates_.right.map(function (x) {
                     return this.privates_.left + " " + this.privates_.op + " " + this.escape_(this.privates_.right);
                 });
@@ -414,7 +442,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
                 expr = this.privates_.left + " " + this.privates_.op + " " + this.escape_(this.privates_.right);
             }
             this.privates_.lop = this.privates_.lop || "and";
-            if (core_1.TextUtils.isNotEmptyString(this.params_.$filter)) {
+            if (TextUtils.isNotEmptyString(this.params_.$filter)) {
                 this.params_.$filter = this.params_.$filter + " " + this.privates_.lop + " " + expr;
             }
             else {
@@ -439,14 +467,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             if (val instanceof Date) {
                 var dt = new Date(val);
                 var year = dt.getFullYear();
-                var month = core_1.TextUtils.zeroPad(dt.getMonth() + 1, 2);
-                var day = core_1.TextUtils.zeroPad(dt.getDate(), 2);
-                var hour = core_1.TextUtils.zeroPad(dt.getHours(), 2);
-                var minute = core_1.TextUtils.zeroPad(dt.getMinutes(), 2);
-                var second = core_1.TextUtils.zeroPad(dt.getSeconds(), 2);
-                var millisecond = core_1.TextUtils.zeroPad(dt.getMilliseconds(), 3);
+                var month = TextUtils.zeroPad(dt.getMonth() + 1, 2);
+                var day = TextUtils.zeroPad(dt.getDate(), 2);
+                var hour = TextUtils.zeroPad(dt.getHours(), 2);
+                var minute = TextUtils.zeroPad(dt.getMinutes(), 2);
+                var second = TextUtils.zeroPad(dt.getSeconds(), 2);
+                var millisecond = TextUtils.zeroPad(dt.getMilliseconds(), 3);
                 //format timezone
-                var offset = (new Date()).getTimezoneOffset(), timezone = (offset >= 0 ? '+' : '') + core_1.TextUtils.zeroPad(Math.floor(offset / 60), 2) + ':' + core_1.TextUtils.zeroPad(offset % 60, 2);
+                var offset = (new Date()).getTimezoneOffset(), timezone = (offset >= 0 ? '+' : '') + TextUtils.zeroPad(Math.floor(offset / 60), 2) + ':' + TextUtils.zeroPad(offset % 60, 2);
                 return "'" + year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second + '.' + millisecond + timezone + "'";
             }
             if (val instanceof Array) {
@@ -477,42 +505,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
                 return this.escape_(val.valueOf());
         };
         ClientDataQueryable.prototype.where = function (name) {
-            core_1.Args.notEmpty(name, "Left operand");
+            Args.notEmpty(name, "Left operand");
             this.privates_.left = name;
             return this;
         };
         ClientDataQueryable.prototype.and = function (name) {
-            core_1.Args.notEmpty(name, "Left operand");
+            Args.notEmpty(name, "Left operand");
             this.privates_.left = name;
             this.privates_.lop = "and";
             return this;
         };
         ClientDataQueryable.prototype.andAlso = function (name) {
-            core_1.Args.notEmpty(name, "Left operand");
+            Args.notEmpty(name, "Left operand");
             this.privates_.left = name;
             this.privates_.lop = "and";
-            if (!core_1.TextUtils.isNullOrUndefined(this.params_.$filter)) {
+            if (!TextUtils.isNullOrUndefined(this.params_.$filter)) {
                 this.params_.$filter = "(" + this.params_.$filter + ")";
             }
             return this;
         };
         ClientDataQueryable.prototype.or = function (name) {
-            core_1.Args.notEmpty(name, "Left operand");
+            Args.notEmpty(name, "Left operand");
             this.privates_.left = name;
             this.privates_.lop = "or";
             return this;
         };
         ClientDataQueryable.prototype.orElse = function (name) {
-            core_1.Args.notEmpty(name, "Left operand");
+            Args.notEmpty(name, "Left operand");
             this.privates_.left = name;
             this.privates_.lop = "or";
-            if (!core_1.TextUtils.isNullOrUndefined(this.params_.$filter)) {
+            if (!TextUtils.isNullOrUndefined(this.params_.$filter)) {
                 this.params_.$filter = "(" + this.params_.$filter + ")";
             }
             return this;
         };
         ClientDataQueryable.prototype.compare_ = function (op, value) {
-            core_1.Args.notNull(this.privates_.left, "The left operand");
+            Args.notNull(this.privates_.left, "The left operand");
             this.privates_.op = op;
             this.privates_.right = value;
             return this.append_();
@@ -541,7 +569,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
          * @returns {ClientDataQueryable}
          */
         ClientDataQueryable.prototype.between = function (value1, value2) {
-            core_1.Args.notNull(this.privates_.left, "The left operand");
+            Args.notNull(this.privates_.left, "The left operand");
             //generate new filter
             var s = ClientDataQueryable.create(this.getModel())
                 .where(this.privates_.left).greaterOrEqual(value1)
@@ -564,15 +592,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             return this.params_.$filter;
         };
         ClientDataQueryable.prototype.contains = function (value) {
-            core_1.Args.notNull(this.privates_.left, "The left operand");
+            Args.notNull(this.privates_.left, "The left operand");
             this.privates_.op = 'ge';
-            this.privates_.left = core_1.TextUtils.format('indexof(%s,%s)', this.privates_.left, this.escape_(value));
+            this.privates_.left = TextUtils.format('indexof(%s,%s)', this.privates_.left, this.escape_(value));
             this.privates_.right = 0;
             return this.append_();
         };
         ClientDataQueryable.prototype.aggregate_ = function (fn) {
-            core_1.Args.notNull(this.privates_.left, "The left operand");
-            this.privates_.left = core_1.TextUtils.format('%s(%s)', fn, this.privates_.left);
+            Args.notNull(this.privates_.left, "The left operand");
+            this.privates_.left = TextUtils.format('%s(%s)', fn, this.privates_.left);
             return this;
         };
         ClientDataQueryable.prototype.getDate = function () {
@@ -627,23 +655,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             return this.aggregate_("ceiling");
         };
         ClientDataQueryable.prototype.indexOf = function (s) {
-            core_1.Args.notNull(this.privates_.left, "The left operand");
-            this.privates_.left = core_1.TextUtils.format('indexof(%s,%s)', this.privates_.left, this.escape_(s));
+            Args.notNull(this.privates_.left, "The left operand");
+            this.privates_.left = TextUtils.format('indexof(%s,%s)', this.privates_.left, this.escape_(s));
             return this;
         };
         ClientDataQueryable.prototype.substr = function (pos, length) {
-            core_1.Args.notNull(this.privates_.left, "The left operand");
-            this.privates_.left = core_1.TextUtils.format('substring(%s,%s,%s)', this.privates_.left, pos, length);
+            Args.notNull(this.privates_.left, "The left operand");
+            this.privates_.left = TextUtils.format('substring(%s,%s,%s)', this.privates_.left, pos, length);
             return this;
         };
         ClientDataQueryable.prototype.startsWith = function (s) {
-            core_1.Args.notNull(this.privates_.left, "The left operand");
-            this.privates_.left = core_1.TextUtils.format('startswith(%s,%s)', this.privates_.left, this.escape_(s));
+            Args.notNull(this.privates_.left, "The left operand");
+            this.privates_.left = TextUtils.format('startswith(%s,%s)', this.privates_.left, this.escape_(s));
             return this;
         };
         ClientDataQueryable.prototype.endsWith = function (s) {
-            core_1.Args.notNull(this.privates_.left, "The left operand");
-            this.privates_.left = core_1.TextUtils.format('endswith(%s,%s)', this.privates_.left, this.escape_(s));
+            Args.notNull(this.privates_.left, "The left operand");
+            this.privates_.left = TextUtils.format('endswith(%s,%s)', this.privates_.left, this.escape_(s));
             return this;
         };
         ClientDataQueryable.prototype.select = function () {
@@ -651,11 +679,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             for (var _i = 0; _i < arguments.length; _i++) {
                 attr[_i - 0] = arguments[_i];
             }
-            core_1.Args.notNull(attr, "Attributes");
-            core_1.Args.check(attr.length == 0, "Attributes may not be empty");
+            Args.notNull(attr, "Attributes");
+            Args.check(attr.length > 0, "Attributes may not be empty");
             var arr = [];
             for (var i = 0; i < attr.length; i++) {
-                core_1.Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
+                Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
                 arr.push(attr[i]);
             }
             this.params_.$select = arr.join(",");
@@ -666,11 +694,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             for (var _i = 0; _i < arguments.length; _i++) {
                 attr[_i - 0] = arguments[_i];
             }
-            core_1.Args.notNull(attr, "Attributes");
-            core_1.Args.check(attr.length == 0, "Attributes may not be empty");
+            Args.notNull(attr, "Attributes");
+            Args.check(attr.length > 0, "Attributes may not be empty");
             var arr = [];
             for (var i = 0; i < attr.length; i++) {
-                core_1.Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
+                Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
                 arr.push(attr[i]);
             }
             this.params_.$groupby = arr.join(",");
@@ -681,33 +709,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             for (var _i = 0; _i < arguments.length; _i++) {
                 attr[_i - 0] = arguments[_i];
             }
-            core_1.Args.notNull(attr, "Attributes");
-            core_1.Args.check(attr.length == 0, "Attributes may not be empty");
+            Args.notNull(attr, "Attributes");
+            Args.check(attr.length > 0, "Attributes may not be empty");
             var arr = [];
             for (var i = 0; i < attr.length; i++) {
-                core_1.Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
+                Args.check(typeof attr[i] === "string", "Invalid attribute. Expected string.");
                 arr.push(attr[i]);
             }
-            this.params_.$groupby = arr.join(",");
+            this.params_.$expand = arr.join(",");
             return this;
         };
         ClientDataQueryable.prototype.orderBy = function (attr) {
-            core_1.Args.notEmpty(attr, "Order by attribute");
+            Args.notEmpty(attr, "Order by attribute");
             this.params_.$orderby = attr.toString();
             return this;
         };
         ClientDataQueryable.prototype.thenBy = function (attr) {
-            core_1.Args.notEmpty(attr, "Order by attribute");
+            Args.notEmpty(attr, "Order by attribute");
             this.params_.$orderby += (this.params_.$orderby ? ',' + attr.toString() : attr.toString());
             return this;
         };
         ClientDataQueryable.prototype.orderByDescending = function (attr) {
-            core_1.Args.notEmpty(attr, "Order by attribute");
+            Args.notEmpty(attr, "Order by attribute");
             this.params_.$orderby = attr.toString() + " desc";
             return this;
         };
         ClientDataQueryable.prototype.thenByDescending = function (attr) {
-            core_1.Args.notEmpty(attr, "Order by attribute");
+            Args.notEmpty(attr, "Order by attribute");
             this.params_.$orderby += (this.params_.$orderby ? ',' + attr.toString() : attr.toString()) + " desc";
             return this;
         };
@@ -754,6 +782,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
                 headers: []
             });
         };
+        ClientDataQueryable.prototype.filter = function (s) {
+            Args.notEmpty("s", "Filter expression");
+            this.params_.$filter = s;
+            return this;
+        };
         return ClientDataQueryable;
     })();
     exports.ClientDataQueryable = ClientDataQueryable;
@@ -792,13 +825,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             return this.asQueryable().take(num);
         };
         ClientDataModel.prototype.save = function (obj) {
-            return this.getService().execute({ method: "POST", url: core_1.TextUtils.format("/%s/index.json", this.getName()), data: obj, headers: [] });
+            return this.getService().execute({ method: "POST", url: TextUtils.format("/%s/index.json", this.getName()), data: obj, headers: [] });
         };
         ClientDataModel.prototype.schema = function (obj) {
-            return this.getService().execute({ method: "GET", url: core_1.TextUtils.format("/%s/schema.json", this.getName()), data: null, headers: [] });
+            return this.getService().execute({ method: "GET", url: TextUtils.format("/%s/schema.json", this.getName()), data: null, headers: [] });
         };
         ClientDataModel.prototype.remove = function (obj) {
-            return this.getService().execute({ method: "DELETE", url: core_1.TextUtils.format("/%s/index.json", this.getName()), data: obj, headers: [] });
+            return this.getService().execute({ method: "DELETE", url: TextUtils.format("/%s/index.json", this.getName()), data: obj, headers: [] });
         };
         return ClientDataModel;
     })();
@@ -819,7 +852,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
          * Sets a string which represents the base URL of the MOST Web Application Server.
          */
         ClientDataContext.prototype.setBase = function (value) {
-            core_1.Args.notEmpty(value, "Base URL");
+            Args.notEmpty(value, "Base URL");
             this.base_ = value;
         };
         /**
@@ -835,7 +868,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
          * @returns {ClientDataModel}
          */
         ClientDataContext.prototype.model = function (name) {
-            core_1.Args.notEmpty(name, "Model name");
+            Args.notEmpty(name, "Model name");
             return new ClientDataModel(name, this.getService());
         };
         /**
@@ -851,17 +884,95 @@ var __metadata = (this && this.__metadata) || function (k, v) {
                     $filter: "id eq me()"
                 },
                 headers: {
-                    Authorization: "Basic " + core_1.TextUtils.toBase64(username + ":" + password)
+                    Authorization: "Basic " + TextUtils.toBase64(username + ":" + password)
                 }
             });
         };
         ;
         ClientDataContext = __decorate([
-            core_2.Injectable(), 
+            core_1.Injectable(), 
             __metadata('design:paramtypes', [http_1.Http])
         ], ClientDataContext);
         return ClientDataContext;
     })();
     exports.ClientDataContext = ClientDataContext;
+    var DataComponent = (function () {
+        function DataComponent(context) {
+            this.context = context;
+            this.items = new core_1.EventEmitter();
+        }
+        DataComponent.prototype.ngOnInit = function () {
+            this.next();
+        };
+        DataComponent.prototype.next = function () {
+            var _this = this;
+            var self = this;
+            //init client data queryable
+            var q = self.context.model(this.model).asQueryable();
+            //set parameters
+            q.setParam("filter", this.filter)
+                .setParam("select", this.select)
+                .setParam("order", this.order)
+                .setParam("expand", this.expand)
+                .setParam("group", this.group)
+                .setParam("top", this.top)
+                .setParam("inlinecount", this.inlinecount)
+                .setParam("skip", this.skip);
+            //if top = 1 get only first item
+            if (this.top == 1) {
+                return q.first().subscribe(function (data) { _this.items.emit(data); }, function (err) { console.log(err); });
+            }
+            else {
+                //if inline count is true get list (total and records)
+                if (this.inlinecount) {
+                    q.list().subscribe(function (data) { _this.items.emit(data); }, function (err) { console.log(err); });
+                }
+                else {
+                    q.items().subscribe(function (data) { _this.items.emit(data); }, function (err) { console.log(err); });
+                }
+            }
+        };
+        DataComponent = __decorate([
+            core_1.Component({
+                selector: 'most-data',
+                template: "",
+                inputs: ["model", "filter", "top", "skip", "inlinecount", "order", "group", "select", "expand"],
+                outputs: ["items"]
+            }), 
+            __metadata('design:paramtypes', [ClientDataContext])
+        ], DataComponent);
+        return DataComponent;
+    })();
+    exports.DataComponent = DataComponent;
+    var DataComponentWatcher = (function () {
+        function DataComponentWatcher() {
+        }
+        /**
+         * @param {string} target
+         * @param {*} value
+         */
+        DataComponentWatcher.prototype.watch = function (target, value) {
+            Args.notEmpty(target, "Target");
+            this[target] = value;
+        };
+        return DataComponentWatcher;
+    })();
+    exports.DataComponentWatcher = DataComponentWatcher;
+    var DataContentComponent = (function (_super) {
+        __extends(DataContentComponent, _super);
+        function DataContentComponent() {
+            _super.apply(this, arguments);
+        }
+        DataContentComponent = __decorate([
+            core_1.Component({
+                selector: 'most-content',
+                template: "<ng-content></ng-content>",
+                directives: [DataComponent]
+            }), 
+            __metadata('design:paramtypes', [])
+        ], DataContentComponent);
+        return DataContentComponent;
+    })(DataComponentWatcher);
+    exports.DataContentComponent = DataContentComponent;
 });
-//# sourceMappingURL=client.js.map
+//# sourceMappingURL=angular2-most.js.map

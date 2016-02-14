@@ -49,14 +49,15 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
+
             options: {
-                compress: true,
                 mangle: false,
                 sourceMap: true
             },
-            applib: {
-                src: 'dist/angular2-most.js',
-                dest: 'dist/angular2-most.min.js'
+            umd: {
+                files: {
+                    "dist/umd/angular2-most.min.js": ["dist/umd/angular2-most.js"]
+                }
             }
         }
     });
