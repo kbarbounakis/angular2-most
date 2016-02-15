@@ -10,9 +10,15 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
+    "rootDir": ".",
+    "sourceRoot": ".",
     "moduleResolution":"node"
   },
-  "exclude": [
+  "files": [
+    "angular2-most.ts",
+    "!node_modules/**/*.ts"
+  ],
+ "exclude": [
     "node_modules"
   ]
 }
