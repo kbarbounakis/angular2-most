@@ -30,7 +30,7 @@
  */
 
 /**
- * Angular 2 imports
+ * Angular 2 imports (beta)
  */
 import {Injectable, EventEmitter, Input, Output, Component} from 'angular2/core';
 import {Http, Response, BaseRequestOptions, RequestOptions} from 'angular2/http';
@@ -57,6 +57,11 @@ export class Args {
 
     static notEmpty(obj:string, name):void {
         Args.check((obj != null) && (obj !== undefined) && (obj.length > 0), name + " may not be empty", "ENULL");
+    }
+
+    static notNegative(obj:number, name):void {
+        Args.check((typeof obj === 'number'), name + " may be a number", "ENUMBER");
+        Args.check((obj>=0), name + " may not be negative", "ENUMBER");
     }
 
 
@@ -887,6 +892,10 @@ export class ClientDataQueryable {
         return this.first();
     }
 
+    getItem():Observable<any> {
+        return this.first();
+    }
+
     items():Observable<any> {
         delete this.params_.$first;
         this.params_.$inlinecount = false;
@@ -896,6 +905,10 @@ export class ClientDataQueryable {
             data:this.params_,
             headers:[]
         });
+    }
+
+    getItems():Observable<any> {
+        return this.items();
     }
 
     filter(s:string):ClientDataQueryable {
