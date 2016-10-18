@@ -32,7 +32,7 @@
 /**
  * Angular 2 imports (beta)
  */
-import {Injectable, EventEmitter, Component} from '@angular/core';
+import {Injectable, EventEmitter, Component, Inject} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -62,6 +62,11 @@ export class Args {
     static notNegative(obj:number, name):void {
         Args.check((typeof obj === 'number'), name + " may be a number", "ENUMBER");
         Args.check((obj>=0), name + " may not be negative", "ENUMBER");
+    }
+
+    static Positive(obj:number, name):void {
+        Args.check((typeof obj === 'number'), name + " may be a number", "ENUMBER");
+        Args.check((obj>0), name + " must be a positive number", "ENUMBER");
     }
 
 
@@ -266,6 +271,7 @@ export interface DataServiceQueryParams {
     $top:number;
     $skip:number;
     $first:boolean;
+    $levels:number;
 }
 
 export interface DataServiceExecuteOptions {
@@ -911,9 +917,19 @@ export class ClientDataQueryable {
         return this.items();
     }
 
+    getList():Observable<any> {
+        return this.list();
+    }
+
     filter(s:string):ClientDataQueryable {
         Args.notEmpty("s","Filter expression");
             this.params_.$filter = s;
+        return this;
+    }
+
+    levels(n:number):ClientDataQueryable {
+        Args.Positive(n, 'Levels');
+        this.params_.$levels = n;
         return this;
     }
 
@@ -974,7 +990,20 @@ export class ClientDataModel {
         return this.getService().execute({ method:"DELETE", url:TextUtils.format("/%s/index.json", this.getName()),data:obj, headers:[] });
     }
 
+    levels(n:number):ClientDataQueryable {
+        Args.Positive(n, 'Levels');
+        return this.asQueryable().levels(n);
+    }
+
 }
+
+export interface ClientDataContextConfig {
+    base:string
+}
+
+export const DATA_CONTEXT_CONFIG:ClientDataContextConfig = {
+    base: '/'
+};
 
 @Injectable()
 export class ClientDataContext implements ClientDataContextBase {
@@ -983,7 +1012,8 @@ export class ClientDataContext implements ClientDataContextBase {
 
     private service_:ClientDataServiceBase;
 
-    constructor(private http:Http) {
+    constructor(private http:Http, @Inject(DATA_CONTEXT_CONFIG) config:ClientDataContextConfig) {
+        this.base_ = config.base;
         this.service_ = new ClientDataService(this.getBase(), http);
     }
 
@@ -1093,7 +1123,7 @@ export class DataComponent {
             }
             //otherwise get array of items
             else {
-                q.items().subscribe(
+                q.getItems().subscribe(
                     data => { this.items.emit(data); },
                     err => { console.log(err); }
                 );
