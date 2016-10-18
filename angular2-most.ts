@@ -32,8 +32,8 @@
 /**
  * Angular 2 imports
  */
-import {Injectable, EventEmitter, Input, Output, Component} from 'angular2/core';
-import {Http, Response, BaseRequestOptions, RequestOptions} from 'angular2/http';
+import {Injectable, EventEmitter, Component} from '@angular/core';
+import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
